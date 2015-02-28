@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block scripts %}
+    <script src="/media/js/index.js"></script>
+    {% load loginza_widget %}
+{% endblock %}
+{% block content %}
+<div id="slide">
+  <div class="slider">
+    <ul class="items">
+      <li  style="opacity: 0.5;"><img src="/media/images/Slider-5.jpg" alt="">
+        <div class="banner">
+          <p class="text-1">Нужна <strong>помощь?</strong></p>
+          <p class="text-2">Здесь ты можешь попросить коллег о любой услуге и они тебе помогут!</p>
+        </div>
+      </li>
+      <li><img src="/media/images/Slider-6.JPG" alt="">
+        <div class="banner">
+          <p class="text-1">Ты не должен <strong>платить им!</strong></p>
+          <p class="text-2">Взамен ты должен оказать три любых услуги другим людям (коллегам), которые просят помочь им на сайте.</p>
+        </div>
+      </li>
+      <li><img src="/media/images/Slider-7.JPG" alt="">
+        <div class="banner">
+          <p class="text-1">Они ещё трём<strong>и так далее!</strong></p>
+          <p class="text-2">Люди будут всё больше и больше помогать друг другу и в мире станет больше добра!</p>
+        </div>
+      </li>
+      <li><img src="/media/images/slider-4.JPG" alt="">
+        <div class="banner">
+          <p class="text-1">И будет до<strong>бессконечности!</strong></p>
+          <p class="text-2">Любовь ко всему миру и OpenERP системе!</p>
+        </div>
+      </li>
+      <li><img src="/media/images/Slider-8.jpg" alt="">
+        <div class="banner">
+          <p class="text-1">Они ещё трём<strong>и так далее!</strong></p>
+          <p class="text-2">Люди будут всё больше и больше помогать друг другу и в мире станет больше добра!</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<!--==============================content================================-->
+<section id="content">
+  <div class="container_12">
+    <div class="grid_6 box-1"> <img src="/media/images/page1-img1.png" alt="">
+      <div class="extra-wrap">
+        <h2><a href="/create_task" id="create_task">Есть задание!</a></h2>
+        <h2><a href="/create_prikol" id="create_prikol">Есть прикол!</a></h2>
+        <p>Вы можете попросить людей из нашего сообщества сделать что-то нужное для вас. После этого вам нужно будет выполнить любые три просьбы других людей на сайте.</p>
+      </div>
+    </div>
+    <div class="grid_6 box-1">
+          {% if avatar %}
+              <img class="img-border " src="{{ avatar }}" alt=""/>
+          {% elif user.is_authenticated %}
+          {% else %}
+              <img src="/media/images/login.png" alt="">
+          {% endif %}
+      <div class="extra-wrap">
+{#        <h2>Вход</h2>#}
+          <div class="login form">
+          {% if form %}
+              <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input class="bigButton" type="submit" value="Продолжить"/>
+              </form>
+          {% elif user.is_authenticated %}
+              <h2>
+                Привет, <a href="/profile/{{ user.id }}">{{ user }}</a>
+              </h2>
+              <a class="bigButton" href="/profile/{{ user.id }}">Личный кабинет</a>
+              <a class="bigButton" href="/users/logout">Выход</a>
+          {% else %}
+            {% loginza_iframe providers_set="vkontakte,google,facebook,twitter,yandex,mailru" width="330px" height="200px" lang="ru" %}
+          {% endif %}
+              <!--<input type="text" value="Логин" onblur="if(this.value=='') this.value='Логин'" onfocus="if(this.value =='Логин' ) this.value=''">-->
+              <!--<input type="text" value="Пароль" onblur="if(this.value=='') this.value='Пароль'" onfocus="if(this.value =='Пароль' ) this.value=''">-->
+              <!--<a class="link" href="/register">Регистрация</a><a class="link" href="/remember">Забыли пароль?!</a>-->
+          </div>
+      </div>
+    </div>
+    <div class="grid_12 box-2">
+      <div>
+        <p class="text-3">По линии рельной жизни<span>  ENAPPS Lviv ;)</span></p>
+        <p class="text-4">Вместе мы способны изменить OpenERP к лучшему, это проще, чем ты думаешь!</p>
+      </div>
+    </div>
+    <div class="grid_8">
+      <h2 class="top-1"><a href="/tasks">Важные задания</a></h2>
+      <div class="box-3">
+        {% for task in important_tasks %}
+            <div><a href="/task/{{ task.id }}"><img src="/uploads/{{ task.task_photo }}" alt="" class="img-border"></a> <a href="/task/{{ task.id }}" class="link-2">{{ task.title }}</a>
+              <p>{{ task.description|slice:"50" }}</p>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="grid_8">
+      <h2 class="top-1"><a href="/tasks">Свежие задания</a></h2>
+        <div class="box-3">
+              {% for task in fresh_tasks %}
+                  <div><a href="/task/{{ task.id }}"><img src="/uploads/{{ task.task_photo }}" alt="" class="img-border"></a> <a href="/task/{{ task.id }}" class="link-2">{{ task.title }}</a>
+                      <p>{{ task.description|slice:"50" }}</p>
+                  </div>
+              {% endfor %}
+        </div>
+    </div>
+    <div class="grid_8">
+      <h2 class="top-1"><a href="/relax"> Приколы </a></h2>
+        <div class="box-3">
+              {% for task in prikol %}
+                  <div><a href="/relaxing/{{ task.id }}"><img src="/uploads/{{ task.relax_foto }}" alt="" class="img-border"></a> <a href="/relaxing/{{ task.id }}" class="link-2">{{ task.title }}</a>
+                      <p>{{ task.description|slice:"50" }}</p>
+                  </div>
+              {% endfor %}
+        </div>
+    </div>
+      <div class="clear"></div>
+  </div>
+</section>
+    <div id="create_task_dialog" title="Добавление задания">
+        <form method="POST" class="form" action="/create_task/" enctype="multipart/form-data" id="create_task_form">
+            {% csrf_token %}
+            {{ task_form.as_p }}
+            <input type="submit" class="button top-4" value="Добавить">
+        </form>
+    </div>
+    <div id="create_prikol_dialog" title="Добавление прикола">
+        <form method="POST" class="form" action="/create_prikol/" enctype="multipart/form-data" id="create_prikol_form">
+            {% csrf_token %}
+            {{ prikol_form.as_p }}
+            <input type="submit" class="button top-4" value="Добавить">
+        </form>
+    </div>
+{% endblock %}

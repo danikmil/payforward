@@ -1,0 +1,10 @@
+*.log
+*.pot
+*.pyc
+*.jpeg
+*.jpg
+*.png
+*.xcf
+*.gif
+*.idea*
+local_settings.py

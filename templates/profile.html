@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<!--==============================content================================-->
+<section id="content">
+    <div class="container_12 top">
+        <div class="grid_8 profile">
+            <div class="box-5 right-1"> <img src="/uploads/{{ profile.ava }}" alt="" class="img-border fleft ava">
+                <h2>{{ profile.user }}</h2>
+                <p>Выполнил просьб: {{ profile.end_tasks }}</p>
+                <p>Просьб к сообществу: {{ profile.get_tasks }}</p>
+                <h3>Карма {{ profile.karma }}</h3>
+                <a href="https://www.google.com.ua"><img src="/media/images/icon-3.jpg" alt="" <a>Поиск</a></a>
+            </div>
+        </div>
+        <div class="grid_4">
+            <h2>Просит</h2>
+            {% for task in tasks %}
+            <div class="box-6 top-5"> <img src="/uploads/{{ task.task_photo }}" alt="" class="img-indent img-border">
+                <p><a href="/task/{{ task.id }}" class="link">{{ task.title }}</a><br>
+                    {{ task.description|slice:"50" }}</p>
+            </div>
+            {% endfor %}
+            <a href="/tasks" class="button top-4">Больше заданий</a> </div>
+        <div class="clear"></div>
+    </div>
+</section>
+{% endblock %}

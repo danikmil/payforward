@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<!--==============================content================================-->
+<section id="content">
+  <div class="container_12 top">
+    <div class="grid_12">
+        <div class="find form">
+            <input type="text" value="Поиск" onblur="if(this.value=='') this.value='Поиск'" onfocus="if(this.value =='Поиск' ) this.value=''">
+        </div>
+      <h2 class="p5">Акктуальные приколы</h2>
+      <h2 class="p5">Actual prikols :)</h2>
+    </div>
+    {% for rel in relax %}
+        <div class="grid_4">
+          <div><a href="/relaxing/{{ rel.id }}"><img width="285" src="/uploads/{{ rel.relax_foto }}" alt="" class="img-border"></a>
+            <p class="top-4"><a href="/relaxing/{{ rel.id }}" class="link">{{ rel.title }}</a><br>
+              {{ rel.description|slice:"100" }}</p>
+            <a href="/relaxing/{{ rel.id }}" class="button top-4">Подробнее</a> </div>
+         </div>
+    {% endfor %}
+    <div class="clear"></div>
+  </div>
+</section>
+{% endblock %}

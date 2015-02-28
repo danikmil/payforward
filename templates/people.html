@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<!--==============================content================================-->
+<section id="content">
+  <div class="container_12 top people_wrap">
+      <div class="find form">
+          <input type="text" value="Поиск" onblur="if(this.value=='') this.value='Поиск'" onfocus="if(this.value =='Поиск' ) this.value=''">
+      </div>
+      <h2>Эти люди творят добрые дела</h2>
+      <div class="clear"></div>
+
+      {% for people in profile %}
+      <div class="box-5 top-1 left-1">
+          <a href="/profile/{{ people.id }}"><img src="/uploads/{{ people.ava }}" alt="" class="img-indent img-border people"></a>
+          <p><a href="/profile/{{ people.id }}" class="link">{{ people.user }}</a></p>
+      </div>
+      {% endfor %}
+      <div class="clear"></div>
+     </div>
+ </section>
+{% endblock %}
